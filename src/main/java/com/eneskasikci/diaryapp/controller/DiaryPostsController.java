@@ -3,6 +3,7 @@ package com.eneskasikci.diaryapp.controller;
 import com.eneskasikci.diaryapp.model.DiaryPosts;
 import com.eneskasikci.diaryapp.requests.PostCreateRequest;
 import com.eneskasikci.diaryapp.requests.PostUpdateRequest;
+import com.eneskasikci.diaryapp.responses.PostResponse;
 import org.springframework.web.bind.annotation.*;
 import com.eneskasikci.diaryapp.service.DiaryPostsService;
 
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/diaryApp/posts")
 public class DiaryPostsController {
     private final DiaryPostsService diaryPostsService;
@@ -25,12 +27,13 @@ public class DiaryPostsController {
     }
 
     // To get the all the diary posts from the database
-    // http://localhost:5555/api/diaryApp/posts/getAllPosts
+    // http://localhost:5555/api/diaryApp/posts/getAllPostsFromResponse
     // To get the all the diary posts from the database by any user
-    // http://localhost:5555/api/diaryApp/posts/getAllPosts?userId=X (X is the user id)
-    @GetMapping("/getAllPosts")
-    public List<DiaryPosts> getAllPosts(@RequestParam Optional<Long> userId){
-        return diaryPostsService.getAllDiaryPosts(userId);
+    // http://localhost:5555/api/diaryApp/posts/getAllPostsFromResponse?userId=X (X is the user id)
+
+    @GetMapping("/getAllPostsFromResponse")
+    public List<PostResponse> getAllDiaryPostsResponse(@RequestParam Optional<Long> userId){
+        return diaryPostsService.getAllDiaryPostsResponse(userId);
     }
 
     // After given its ID, it shows the Post

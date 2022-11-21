@@ -1,9 +1,10 @@
 package com.eneskasikci.diaryapp.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -35,9 +36,9 @@ public class DiaryPosts implements Serializable {
     @Column(name = "diaryPosts_CreatedDate", nullable = false)
     private LocalDate diaryCreatedDate = LocalDate.now();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "diaryUser_id", nullable = false)
-    @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
     DiaryUsers diaryUsers;
 
 }
