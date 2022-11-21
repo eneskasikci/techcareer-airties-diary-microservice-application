@@ -3,6 +3,7 @@ package com.eneskasikci.diaryapp.service;
 import com.eneskasikci.diaryapp.model.DiaryPosts;
 import com.eneskasikci.diaryapp.model.DiaryUsers;
 import com.eneskasikci.diaryapp.requests.PostCreateRequest;
+import com.eneskasikci.diaryapp.requests.PostUpdateRequest;
 import org.springframework.stereotype.Service;
 import com.eneskasikci.diaryapp.repository.IDiaryPostsRepository;
 
@@ -20,7 +21,7 @@ public class DiaryPostsService {
         this.diaryUsersService = diaryUsersService;
     }
 
-    public DiaryPosts saveDiaryPosts(PostCreateRequest diaryPostRequest){
+    public DiaryPosts createDiaryPosts(PostCreateRequest diaryPostRequest){
         DiaryUsers diaryUsers = diaryUsersService.getDiaryUserById(diaryPostRequest.getRequest_diaryUserId());
         if (diaryUsers == null){
             return null;
@@ -36,5 +37,25 @@ public class DiaryPostsService {
         if(userId.isPresent())
             return IDiaryPostsRepository.findAllByDiaryUsers_UserId(userId.get());
         return IDiaryPostsRepository.findAll();
+    }
+
+    public DiaryPosts getPostFromPostId(Long postId) {
+        return IDiaryPostsRepository.findById(postId).orElse(null);
+    }
+
+    public DiaryPosts updatePostById(Long postId, PostUpdateRequest updatePost) {
+        Optional<DiaryPosts> post = IDiaryPostsRepository.findById(postId);
+        if (post.isPresent()){
+            DiaryPosts toUpdate = post.get();
+            toUpdate.setDiaryTitle(updatePost.getDiaryUpdatedPostTitle());
+            toUpdate.setDiaryContent(updatePost.getDiaryUpdatedPostContent());
+            IDiaryPostsRepository.save(toUpdate);
+            return toUpdate;
+        }
+        return null;
+    }
+
+    public void deletePostById(Long postId) {
+        IDiaryPostsRepository.deleteById(postId);
     }
 }
