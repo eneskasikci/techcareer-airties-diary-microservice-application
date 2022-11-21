@@ -4,11 +4,13 @@ import com.eneskasikci.diaryapp.model.DiaryPosts;
 import com.eneskasikci.diaryapp.model.DiaryUsers;
 import com.eneskasikci.diaryapp.requests.PostCreateRequest;
 import com.eneskasikci.diaryapp.requests.PostUpdateRequest;
+import com.eneskasikci.diaryapp.responses.PostResponse;
 import org.springframework.stereotype.Service;
 import com.eneskasikci.diaryapp.repository.IDiaryPostsRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DiaryPostsService {
@@ -33,10 +35,14 @@ public class DiaryPostsService {
         return IDiaryPostsRepository.save(toSave);
     }
 
-    public List<DiaryPosts> getAllDiaryPosts(Optional<Long> userId){
-        if(userId.isPresent())
-            return IDiaryPostsRepository.findAllByDiaryUsers_UserId(userId.get());
-        return IDiaryPostsRepository.findAll();
+    public List<PostResponse> getAllDiaryPostsResponse(Optional<Long> userId){
+        List<DiaryPosts> list;
+        if(userId.isPresent()) {
+            list = IDiaryPostsRepository.findAllByDiaryUsers_UserId(userId.get());
+        } else {
+        list = IDiaryPostsRepository.findAll();
+        }
+        return list.stream().map(PostResponse::new).collect(Collectors.toList());
     }
 
     public DiaryPosts getPostFromPostId(Long postId) {
