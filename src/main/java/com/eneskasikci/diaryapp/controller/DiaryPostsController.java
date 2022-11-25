@@ -3,10 +3,10 @@ package com.eneskasikci.diaryapp.controller;
 import com.eneskasikci.diaryapp.model.DiaryPosts;
 import com.eneskasikci.diaryapp.requests.PostCreateRequest;
 import com.eneskasikci.diaryapp.requests.PostDeleteRequest;
-import com.eneskasikci.diaryapp.requests.PostListRequest;
 import com.eneskasikci.diaryapp.requests.PostUpdateRequest;
 import com.eneskasikci.diaryapp.responses.PostResponse;
 import com.eneskasikci.diaryapp.service.DiaryUsersService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.eneskasikci.diaryapp.service.DiaryPostsService;
 
@@ -38,6 +38,10 @@ public class DiaryPostsController {
     public List<PostResponse> getAllDiaryPostsResponse(@RequestParam Optional<Long> userId){
         return diaryPostsService.getAllDiaryPostsResponse(userId);
     }
+    @GetMapping("/getAllPostsFromUser/{userName}")
+    public List<PostResponse> getPostsFromUser(@PathVariable String userName){
+        return diaryPostsService.getAllDiaryPostsFromUser(userName);
+    }
 
     // After given its ID, it shows the Post
     // http://localhost:5555/api/diaryApp/posts/1 -> this brings the first post in the DB if GetMapping
@@ -54,13 +58,13 @@ public class DiaryPostsController {
     }
 
     @PutMapping("/updatePostIfUserIsOwner")
-    public DiaryPosts updatePostIfUserIsOwner(@RequestBody PostUpdateRequest updatePost){
+    public ResponseEntity<?> updatePostIfUserIsOwner(@RequestBody PostUpdateRequest updatePost){
         return diaryPostsService.updatePostIfUserIsOwner(updatePost);
     }
 
     // delete post if the user is the owner of the post
     @DeleteMapping("/deletePostIfUserIsOwner")
-    public Optional<?> deletePostIfUserIsOwner(@RequestBody PostDeleteRequest postDeleteRequest){
+    public ResponseEntity<?> deletePostIfUserIsOwner(@RequestBody PostDeleteRequest postDeleteRequest){
         return diaryPostsService.deletePostIfUserIsOwner(postDeleteRequest);
     }
 }

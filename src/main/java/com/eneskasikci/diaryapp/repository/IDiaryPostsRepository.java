@@ -9,5 +9,7 @@ import java.util.List;
 @Repository
 public interface IDiaryPostsRepository extends JpaRepository<DiaryPosts, Long> {
     List<DiaryPosts> findAllByDiaryUsers_UserId(Long userId);
+
+    List<DiaryPosts> findAllByDiaryUsers_UserName(String userName);
 }
 
