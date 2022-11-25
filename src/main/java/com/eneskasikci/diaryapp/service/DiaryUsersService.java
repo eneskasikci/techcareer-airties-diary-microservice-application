@@ -27,4 +27,11 @@ public class DiaryUsersService {
         return IDiaryUsersRepository.findById(userId).orElse(null);
     }
 
+    public DiaryUsers getDiaryUserByName(String userName){
+        return IDiaryUsersRepository.findByUserName(userName);
+    }
+
+    public DiaryUsers saveDiaryUserFromRequest(Long request_diaryUserId, String request_userName) {
+        return IDiaryUsersRepository.save(new DiaryUsers(request_diaryUserId, request_userName));
+    }
 }

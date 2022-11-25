@@ -41,4 +41,6 @@ public class DiaryPosts implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     DiaryUsers diaryUsers;
 
+
+
 }

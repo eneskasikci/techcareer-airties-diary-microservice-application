@@ -2,8 +2,14 @@ package com.eneskasikci.diaryapp.requests;
 
 import lombok.Data;
 
+import javax.persistence.Id;
+
 @Data
 public class PostUpdateRequest {
-    String diaryUpdatedPostTitle;
-    String diaryUpdatedPostContent;
+    @Id
+    private Long request_diaryUpdatedPostId;
+    private String request_diaryUpdatedPostTitle;
+    private String request_diaryUpdatedPostContent;
+    private String request_diaryUpdatedPost_userName;
+
 }

@@ -2,8 +2,11 @@ package com.eneskasikci.diaryapp.controller;
 
 import com.eneskasikci.diaryapp.model.DiaryPosts;
 import com.eneskasikci.diaryapp.requests.PostCreateRequest;
+import com.eneskasikci.diaryapp.requests.PostDeleteRequest;
+import com.eneskasikci.diaryapp.requests.PostListRequest;
 import com.eneskasikci.diaryapp.requests.PostUpdateRequest;
 import com.eneskasikci.diaryapp.responses.PostResponse;
+import com.eneskasikci.diaryapp.service.DiaryUsersService;
 import org.springframework.web.bind.annotation.*;
 import com.eneskasikci.diaryapp.service.DiaryPostsService;
 
@@ -16,12 +19,12 @@ import java.util.Optional;
 public class DiaryPostsController {
     private final DiaryPostsService diaryPostsService;
 
-    public DiaryPostsController(DiaryPostsService diaryPostsService) {
+    public DiaryPostsController(DiaryPostsService diaryPostsService, DiaryUsersService diaryUsersService) {
         this.diaryPostsService = diaryPostsService;
     }
 
-    // http://localhost:5555/api/diaryApp/posts/saveDiaryPost
-    @PostMapping("/saveDiaryPost")
+    // http://localhost:5555/api/diaryApp/posts/createDiaryPost
+    @PostMapping("/createDiaryPost")
     public DiaryPosts createDiaryPost(@RequestBody PostCreateRequest diaryPostRequest){
         return diaryPostsService.createDiaryPosts(diaryPostRequest);
     }
@@ -50,10 +53,14 @@ public class DiaryPostsController {
         return diaryPostsService.updatePostById(postId, updatePost);
     }
 
-    // After given its ID, deletes the Post
-    // http://localhost:5555/api/diaryApp/posts/deletePost/1 -> this deletes the first post in the DB, select DeleteMapping
-    @DeleteMapping("/deletePost/{postId}")
-    public void deletePostById(@PathVariable Long postId){
-        diaryPostsService.deletePostById(postId);
+    @PutMapping("/updatePostIfUserIsOwner")
+    public DiaryPosts updatePostIfUserIsOwner(@RequestBody PostUpdateRequest updatePost){
+        return diaryPostsService.updatePostIfUserIsOwner(updatePost);
+    }
+
+    // delete post if the user is the owner of the post
+    @DeleteMapping("/deletePostIfUserIsOwner")
+    public Optional<?> deletePostIfUserIsOwner(@RequestBody PostDeleteRequest postDeleteRequest){
+        return diaryPostsService.deletePostIfUserIsOwner(postDeleteRequest);
     }
 }
