@@ -38,6 +38,10 @@ public class DiaryPostsController {
     public List<PostResponse> getAllDiaryPostsResponse(@RequestParam Optional<Long> userId){
         return diaryPostsService.getAllDiaryPostsResponse(userId);
     }
+    @GetMapping("/getAllPostsFromUser/{userName}")
+    public List<PostResponse> getPostsFromUser(@PathVariable String userName){
+        return diaryPostsService.getAllDiaryPostsFromUser(userName);
+    }
 
     // After given its ID, it shows the Post
     // http://localhost:5555/api/diaryApp/posts/1 -> this brings the first post in the DB if GetMapping

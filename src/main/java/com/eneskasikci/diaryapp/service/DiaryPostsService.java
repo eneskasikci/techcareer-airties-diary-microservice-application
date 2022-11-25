@@ -89,4 +89,14 @@ public class DiaryPostsService {
         }
         return null;
     }
+
+    public List<PostResponse> getAllDiaryPostsFromUser(String userName) {
+        List<DiaryPosts> list;
+        if (userName != null) {
+            list = IDiaryPostsRepository.findAllByDiaryUsers_UserName(userName);
+        } else {
+            return null;
+        }
+        return list.stream().map(PostResponse::new).collect(Collectors.toList());
+    }
 }
