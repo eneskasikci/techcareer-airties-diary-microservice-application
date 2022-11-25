@@ -4,9 +4,10 @@ import com.eneskasikci.diaryapp.model.DiaryPosts;
 import com.eneskasikci.diaryapp.model.DiaryUsers;
 import com.eneskasikci.diaryapp.requests.PostCreateRequest;
 import com.eneskasikci.diaryapp.requests.PostDeleteRequest;
-import com.eneskasikci.diaryapp.requests.PostListRequest;
 import com.eneskasikci.diaryapp.requests.PostUpdateRequest;
 import com.eneskasikci.diaryapp.responses.PostResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.eneskasikci.diaryapp.repository.IDiaryPostsRepository;
 
@@ -64,30 +65,35 @@ public class DiaryPostsService {
         return null;
     }
 
-    public Optional<?> deletePostIfUserIsOwner(PostDeleteRequest postDeleteRequest) {
+    // BUG: Returns Retrofit null and this creates a 500 error code in the gateway even though deletion is successfully made.
+    // TODO: Fix this bug.
+    public ResponseEntity<?> deletePostIfUserIsOwner(PostDeleteRequest postDeleteRequest) {
         // check if there is a post with the requested id
         Optional<DiaryPosts> post = IDiaryPostsRepository.findById(postDeleteRequest.getDeletionrequest_diaryId());
         if (post.isPresent()){
             // check if the user is the owner of the post
             if (post.get().getDiaryUsers().getUserName().equals(postDeleteRequest.getDeletionrequest_userName())){
                 IDiaryPostsRepository.deleteById(postDeleteRequest.getDeletionrequest_diaryId());
-                return Optional.of("Post deleted successfully");
+                return new ResponseEntity<>("Post deleted successfully", HttpStatus.OK);
             }
-            return Optional.of("You are not the owner of the post");
+            return new ResponseEntity<>("You are not the owner of the post", HttpStatus.BAD_REQUEST);
         }
-        return Optional.of("There is no post with the requested id");
+        return new ResponseEntity<>("There is no post with the requested id", HttpStatus.BAD_REQUEST);
     }
 
-    public DiaryPosts updatePostIfUserIsOwner(PostUpdateRequest updatePost) {
+    // BUG: Returns Retrofit null and this creates a 500 error code in the gateway even though update is successfully made.
+    // TODO: Fix this bug.
+    public ResponseEntity<?> updatePostIfUserIsOwner(PostUpdateRequest updatePost) {
         // check if there is a post with the requested id
         Optional<DiaryPosts> post = IDiaryPostsRepository.findById(updatePost.getRequest_diaryUpdatedPostId());
         if (post.isPresent()){
             // check if the user is the owner of the post
             if (post.get().getDiaryUsers().getUserName().equals(updatePost.getRequest_diaryUpdatedPost_userName())){
-                return updatePostById(updatePost.getRequest_diaryUpdatedPostId(), updatePost);
+                updatePostById(updatePost.getRequest_diaryUpdatedPostId(), updatePost);
+                return new ResponseEntity<>("Post updated successfully", HttpStatus.OK);
             }
         }
-        return null;
+        return new ResponseEntity<>("You are not the owner of the post", HttpStatus.BAD_REQUEST);
     }
 
     public List<PostResponse> getAllDiaryPostsFromUser(String userName) {
