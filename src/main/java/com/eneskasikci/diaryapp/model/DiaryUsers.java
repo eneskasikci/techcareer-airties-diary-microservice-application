@@ -22,7 +22,4 @@ public class DiaryUsers implements Serializable {
 
     @Column(name = "diaryUser_name", nullable = false, columnDefinition = "TEXT")
     private String userName;
-
-    @Column(name = "diaryUser_password", nullable = false)
-    private String userPassword;
 }
