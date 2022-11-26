@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  diaryapp:
+    container_name: diaryapp.jar
+    image: diaryapp
+    restart: always
+    build: ./
+    ports:
+      - "5555:5555"
