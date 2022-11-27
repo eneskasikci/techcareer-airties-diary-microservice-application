@@ -30,13 +30,13 @@ public class DiaryPostsController {
     }
 
     // To get the all the diary posts from the database
-    // http://localhost:5555/api/diaryApp/posts/getAllPostsFromResponse
+    // http://localhost:5555/api/diaryApp/posts/getAllPosts
     // To get the all the diary posts from the database by any user
-    // http://localhost:5555/api/diaryApp/posts/getAllPostsFromResponse?userId=X (X is the user id)
+    // http://localhost:5555/api/diaryApp/posts/getAllPosts?userId=X (X is the user id)
 
-    @GetMapping("/getAllPostsFromResponse")
-    public List<PostResponse> getAllDiaryPostsResponse(@RequestParam Optional<Long> userId){
-        return diaryPostsService.getAllDiaryPostsResponse(userId);
+    @GetMapping("/getAllPosts")
+    public List<PostResponse> getAllDiaryPosts(@RequestParam Optional<Long> userId){
+        return diaryPostsService.getAllDiaryPosts(userId);
     }
     @GetMapping("/getAllPostsFromUser/{userName}")
     public List<PostResponse> getPostsFromUser(@PathVariable String userName){

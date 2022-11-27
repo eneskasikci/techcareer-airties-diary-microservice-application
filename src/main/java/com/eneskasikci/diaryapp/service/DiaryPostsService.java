@@ -38,7 +38,7 @@ public class DiaryPostsService {
         return IDiaryPostsRepository.save(toSave);
     }
 
-    public List<PostResponse> getAllDiaryPostsResponse(Optional<Long> userId){
+    public List<PostResponse> getAllDiaryPosts(Optional<Long> userId){
         List<DiaryPosts> list;
         if(userId.isPresent()) {
             list = IDiaryPostsRepository.findAllByDiaryUsers_UserId(userId.get());
