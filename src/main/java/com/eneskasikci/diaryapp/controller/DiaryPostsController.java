@@ -29,7 +29,7 @@ public class DiaryPostsController {
     // http://localhost:5555/api/diaryApp/posts/createDiaryPost
     @PostMapping("/createDiaryPost")
     @ApiOperation(value = "Create a new Diary Post.",
-            notes = " Creates a new Diary Post in the database witha Post Request parameters. Passing a JSON body.")
+            notes = " Creates a new Diary Post in the database with a Post Request parameters. Passing a JSON body.")
     public DiaryPosts createDiaryPost(@RequestBody @ApiParam(value = "Requirements for the post creation." +
             "We are using a DTO.") PostCreateRequest diaryPostRequest){
         return diaryPostsService.createDiaryPosts(diaryPostRequest);
