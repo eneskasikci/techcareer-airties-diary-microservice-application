@@ -9,7 +9,7 @@ services:
     ports:
       - "5555:5555"
     networks:
-        - registerloginapp_diary-network
+        - registerloginapp_registerloginapp-network
 networks:
-  registerloginapp_diary-network:
+  registerloginapp_registerloginapp-network:
     external: true
