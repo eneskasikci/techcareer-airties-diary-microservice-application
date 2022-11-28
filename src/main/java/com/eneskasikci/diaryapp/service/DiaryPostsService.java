@@ -6,6 +6,7 @@ import com.eneskasikci.diaryapp.requests.PostCreateRequest;
 import com.eneskasikci.diaryapp.requests.PostDeleteRequest;
 import com.eneskasikci.diaryapp.requests.PostUpdateRequest;
 import com.eneskasikci.diaryapp.responses.PostResponse;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -104,5 +105,9 @@ public class DiaryPostsService {
             return null;
         }
         return list.stream().map(PostResponse::new).collect(Collectors.toList());
+    }
+
+    public void deleteAllPosts() {
+        IDiaryPostsRepository.deleteAll();
     }
 }
