@@ -19,7 +19,7 @@ Start the terminal in the project directory. Start the containers by "docker-com
             "request_diaryTitle": "post6123",
             "request_diaryContent": "post1236",
             "request_diaryUserName" : "eneskasikci"
--           "request_diaryUserId" : 1 -- This is only required if its sent from the Register Login Application.
+            "request_diaryUserId" : 1 -- This is only required if its sent from the Register Login Application.
         }
 
 Creates a new Diary Post in the database with a Post Request parameters. If the user does not exist, it will be created.
