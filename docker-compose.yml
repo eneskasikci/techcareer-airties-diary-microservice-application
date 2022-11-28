@@ -8,3 +8,8 @@ services:
     build: ./
     ports:
       - "5555:5555"
+    networks:
+        - registerloginapp_diary-network
+networks:
+  registerloginapp_diary-network:
+    external: true
