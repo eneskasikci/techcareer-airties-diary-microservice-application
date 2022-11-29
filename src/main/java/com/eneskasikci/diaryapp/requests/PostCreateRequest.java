@@ -18,7 +18,7 @@ public class PostCreateRequest {
     @ApiModelProperty(value = "Post Content. Cannot be empty.")
     private String request_diaryContent;
     @ApiModelProperty(value = "Username of the owner. Cannot be empty. It is used to identify the user.")
-    private String request_userName;
+    private String request_diaryUserName;
     @ApiModelProperty(value = "User ID. It is used to identify the user.")
     private Long request_diaryUserId;
 }

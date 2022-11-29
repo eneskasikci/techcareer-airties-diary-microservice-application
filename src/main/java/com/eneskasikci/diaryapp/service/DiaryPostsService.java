@@ -30,7 +30,7 @@ public class DiaryPostsService {
     public DiaryPosts createDiaryPosts(PostCreateRequest diaryPostRequest){
         DiaryUsers diaryUsers = diaryUsersService.getDiaryUserById(diaryPostRequest.getRequest_diaryUserId());
         if (diaryUsers == null){
-            diaryUsers = diaryUsersService.saveDiaryUserFromRequest(diaryPostRequest.getRequest_diaryUserId(), diaryPostRequest.getRequest_userName());
+            diaryUsers = diaryUsersService.saveDiaryUserFromRequest(diaryPostRequest.getRequest_diaryUserId(), diaryPostRequest.getRequest_diaryUserName());
         }
         DiaryPosts toSave = new DiaryPosts();
         toSave.setDiaryTitle(diaryPostRequest.getRequest_diaryTitle());
